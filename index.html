@@ -2,130 +2,77 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>BebIA – Historias y cuidados</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f8f9fa;
-            color: #212529;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 500px;
-            margin: 40px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
-        }
-        h1 {
-            text-align: center;
-            color: #007bff;
-        }
-        p.tagline {
-            text-align: center;
-            color: #6c757d;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 1em;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1em;
-            cursor: pointer;
-        }
-        .accordion {
-            margin-top: 25px;
-        }
-        .accordion button {
-            width: 100%;
-            text-align: left;
-            padding: 12px;
-            font-weight: bold;
-            background: #e9ecef;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 5px;
-        }
-        .panel {
-            display: none;
-            background: #f8f9fa;
-            padding: 15px;
-            border-left: 4px solid #007bff;
-            border-radius: 0 0 8px 8px;
-            margin-bottom: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>BebIA – Cuidado y Juego</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 30px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+    h1 { text-align: center; color: #007bff; }
+    input { width: 100%; padding: 10px; margin: 8px 0; border-radius: 6px; border: 1px solid #ccc; }
+    button { background: #007bff; color: white; padding: 12px; width: 100%; border: none; border-radius: 6px; cursor: pointer; font-size: 1em; margin-top: 10px; }
+    .accordion button { width: 100%; text-align: left; padding: 12px; background: #e9ecef; border: none; border-radius: 6px; margin-top: 10px; font-weight: bold; cursor: pointer; }
+    .panel { display: none; padding: 15px; background: #f8f9fa; border-left: 4px solid #007bff; margin-bottom: 10px; border-radius: 0 0 6px 6px; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>BebIA</h1>
-        <p class="tagline">Tu aliada en la crianza desde el primer día</p>
-        <input type="number" id="edad" placeholder="Edad del bebé (en meses)">
-        <input type="text" id="nombre" placeholder="Nombre del bebé">
-        <button onclick="mostrarIdeas()">Mostrar ideas</button>
-        <div id="resultados" class="accordion" style="display:none;">
-            <button onclick="togglePanel('cuento')">📖 Cuento</button>
-            <div id="cuento" class="panel"></div>
-            <button onclick="togglePanel('receta')">🍵 Receta</button>
-            <div id="receta" class="panel"></div>
-            <button onclick="togglePanel('juego')">🧸 Juego</button>
-            <div id="juego" class="panel"></div>
-            <button onclick="togglePanel('rutina')">🛏 Rutina</button>
-            <div id="rutina" class="panel"></div>
-        </div>
+  <div class="container">
+    <h1>BebIA</h1>
+    <input id="edad" type="number" placeholder="Edad en meses (0 a 24)">
+    <input id="nombre" type="text" placeholder="Nombre del bebé">
+    <button onclick="mostrarIdeas()">Mostrar ideas</button>
+
+    <div id="accordion" style="display:none;">
+      <button onclick="toggle('cuento')">📖 Cuento</button>
+      <div id="cuento" class="panel"></div>
+
+      <button onclick="toggle('receta')">🍽 Receta</button>
+      <div id="receta" class="panel"></div>
+
+      <button onclick="toggle('juego')">🧸 Juego</button>
+      <div id="juego" class="panel"></div>
+
+      <button onclick="toggle('rutina')">🛏 Rutina</button>
+      <div id="rutina" class="panel"></div>
     </div>
+  </div>
 
-    <script>
-        const baseDatos = {
-            "7-12": {
-                cuento: "Luca era el capitán de un barquito que navegaba por el río de leche. En su viaje, saludaba a patitos y recogía estrellas del agua. Un día, encontró una isla secreta donde las estrellas cantaban canciones de cuna. Allí se hizo amigo de una estrella llamada Lili, que le prometió visitarlo cada noche para contarle historias mientras dormía.",
-                receta: "Puré nutritivo: hierve media calabaza pequeña y una zanahoria durante 15 minutos. Tritura con un poco de agua de cocción y añade una cucharadita de aceite de oliva virgen extra. Deja enfriar antes de servir.",
-                juego: "Construye torres de bloques suaves y permite que el bebé las derrumbe. También puedes ofrecer libros de tela con texturas. Un juego excelente es gatear tras una pelota suave, lo que estimula el movimiento y coordinación.",
-                rutina: "7:00 Despertar y desayuno. 9:30 Siesta corta. 12:00 Comida. 13:00 Juego libre. 15:00 Siesta larga. 18:00 Cena ligera. 19:00 Baño con música tranquila. 20:00 Cuento y canción de cuna antes de dormir."
-            }
-        };
+  <script>
+    const fullData = {"0-3": {"cuentos": ["[NOMBRE] viajaba en una nube mágica que lo acunaba mientras dormía. Cada noche, la nube le cantaba canciones que solo los bebés podían entender.", "En un bosque de algodón, [NOMBRE] conoció a un oso dormilón que le enseñó a cerrar los ojitos cuando caía la primera estrella.", "[NOMBRE] soñaba que volaba sobre montañas de peluches donde las risas eran el lenguaje secreto de los bebés."], "recetas": ["Solo leche materna o fórmula. Ofrece en intervalos regulares cada 2-3 horas.", "Lactancia a demanda, con eructo tras cada toma y siempre vigilando señales de hambre.", "Fórmula en biberón si no hay leche materna, controlando la cantidad según peso y edad."], "juegos": ["Masajes suaves en brazos y piernas. Reacciona con sonrisas al contacto piel con piel.", "Coloca al bebé boca abajo unos minutos sobre una manta para fortalecer cuello y espalda.", "Cántale mirándolo a los ojos. Repite sonidos simples y observa su respuesta."], "rutinas": ["Despertar – comida – sueño cada 2 horas. Baño breve al atardecer.", "Siestas frecuentes, con cambio de pañal antes y después de cada toma.", "Rutina simple: alimentar, eructar, jugar suave, dormir. Siempre en ese orden."]}, "4-6": {"cuentos": ["[NOMBRE] encontró una flor mágica que al tocarla contaba historias del sol, la luna y los animales del jardín.", "En su cuna, [NOMBRE] escuchaba a un búho que cada noche le contaba un cuento diferente desde la ventana.", "Un día, [NOMBRE] soñó que montaba sobre una estrella fugaz y descubría planetas de peluches y canciones."], "recetas": ["Papilla de plátano muy triturada. Introduce con cuchara pequeña y limpia.", "Puré de manzana cocida sin azúcar, servido tibio en cucharadas pequeñas.", "Puré de calabacín y patata con un chorrito de aceite de oliva virgen extra."], "juegos": ["Dale un espejo irrompible para que observe su reflejo y reaccione a sus movimientos.", "Sonajeros de colores que suenen diferente según el movimiento. Ideal para explorar sonido y vista.", "Rueda una pelota suave delante de [NOMBRE] mientras está boca abajo."], "rutinas": ["Siesta de mañana, tarde y noche. Baño antes de la última toma.", "Despertar – juego – comida – siesta. Repetir cada ciclo 3 veces al día.", "Paseo breve por la mañana y rutina nocturna con masaje suave y canción."]}, "7-9": {"cuentos": ["[NOMBRE] tenía un dragón de peluche que cobraba vida por las noches y lo llevaba a pasear por castillos de nubes.", "Cada noche, [NOMBRE] se sumergía en un mar de burbujas donde las estrellas le contaban secretos del cielo.", "[NOMBRE] ayudaba a un osito a encontrar su manta mágica. Juntos recorrían habitaciones invisibles dentro del armario."], "recetas": ["Puré de zanahoria, patata y calabacín. Cocer bien y triturar con un poco de agua.", "Gachas de avena con leche materna y un toque de fruta suave como manzana o pera.", "Tortilla de yema bien cuajada desmenuzada en trozos pequeños con trozos de aguacate."], "juegos": ["Torres de cubos blandos para apilar y tirar. Ideal para coordinación mano-ojo.", "Esconde un juguete bajo una tela y observa cómo lo busca. Estimula la permanencia del objeto.", "Ofrece instrumentos musicales como tambor suave o maracas seguras."], "rutinas": ["Desayuno a las 8:00, siesta a las 10:00, paseo a las 11:30, comida a las 13:00, siesta a las 15:00, juego activo a las 17:00.", "Estructura: Comer – jugar – dormir. Repetir 3 ciclos al día. Cuento antes de dormir.", "Rutina nocturna con baño, pijama, cuento largo y abrazo con peluche preferido."]}, "10-12": {"cuentos": ["Una noche, [NOMBRE] construyó un tren de peluches que viajaba por la habitación recogiendo sueños de colores.", "[NOMBRE] conoció a una jirafa sabia que le enseñaba una palabra mágica cada vez que tocaba su hocico.", "En la luna vivía un ratón que solo visitaba a [NOMBRE] para contarle historias cuando todos dormían."], "recetas": ["Pasta pequeña con verdura triturada y aceite de oliva. Sin sal añadida.", "Bastones de fruta madura como plátano o pera, para que los chupe con supervisión.", "Lentejas peladas cocidas con zanahoria. Tritura para hacer un puré suave y nutritivo."], "juegos": ["Juego de meter y sacar objetos de una caja. Refuerza la motricidad fina.", "Libros con texturas, sonidos y solapas para explorar. Ideal para leer juntos.", "Imita movimientos: aplaudir, decir adiós o mover la cabeza. Refuerza conexión social."], "rutinas": ["Despertar 7:30 – desayuno – juego – siesta 9:30 – comida 12:30 – paseo – merienda – cena 19:00 – baño – dormir.", "Pauta diaria: comidas y siestas a la misma hora. Momentos tranquilos antes de dormir.", "Jugar en el suelo tras cada comida. Terminar el día con cuentos repetitivos y canción."]}, "13-18": {"cuentos": ["[NOMBRE] encontró una caja con un mapa secreto que lo guiaba a la tierra de las palabras mágicas.", "Cada tarde, [NOMBRE] hablaba con una mariposa que venía a contarle aventuras de los jardines cercanos.", "[NOMBRE] y un conejito saltaban entre nubes mientras buscaban el arcoíris escondido en su habitación."], "recetas": ["Arroz con verduritas y pollo desmenuzado en trozos pequeños.", "Puré de guisantes con patata y un chorrito de aceite de oliva.", "Pan blandito con queso fresco troceado, servido con trozos de fruta."], "juegos": ["Pintura de dedos sobre papel con babero y bata protectora. Estimula creatividad.", "Juegos de meter fichas en ranuras. Refuerza precisión y concentración.", "Pelotas grandes para empujar, perseguir y patear suavemente."], "rutinas": ["Rutina estable: Despertar – desayuno – juego – siesta – comida – paseo – cena – baño – cuento.", "Juegos tranquilos después de las comidas. Nada de pantallas antes de dormir.", "Tiempo de calidad con adulto por la tarde. Cuentos y abrazos como cierre del día."]}, "19-24": {"cuentos": ["[NOMBRE] abría cada noche una puerta secreta en su armario donde vivían personajes de cuento que solo hablaban con él.", "[NOMBRE] era el ayudante del Sol, encargado de pintar cada rayo de luz cada mañana.", "En el jardín, [NOMBRE] conversaba con los caracoles y aprendía el arte de moverse con calma y alegría."], "recetas": ["Mini albóndigas de carne con arroz suave. Servir templado y en trozos adaptados.", "Tiras de tortilla con espinacas y queso. Acompañar con trozos de fruta.", "Bastones de verdura cocida (zanahoria, calabacín) con yogur natural sin azúcar como dip."], "juegos": ["Circuito de obstáculos casero con cojines, túneles de mantas y cajas para explorar.", "Juego simbólico: dar de comer a un muñeco o ponerlo a dormir. Estimula empatía.", "Encajar formas en cubos clasificadores. Refuerza lógica y motricidad."], "rutinas": ["Despertar 7:00, desayuno 8:00, paseo 9:30, comida 12:30, siesta 13:30, merienda 16:00, baño 18:30, cena 19:00, cuento y dormir 20:00.", "Evitar pantallas. Usar la tarde para juego activo y las noches para calma.", "Hablarle durante el día. Usar canciones asociadas a momentos como baño o comida."]}};
 
-        function mostrarIdeas() {
-            const edad = parseInt(document.getElementById("edad").value);
-            const nombre = document.getElementById("nombre").value || "el bebé";
+    function rangoEdad(meses) {
+      if (meses <= 3) return "0-3";
+      if (meses <= 6) return "4-6";
+      if (meses <= 9) return "7-9";
+      if (meses <= 12) return "10-12";
+      if (meses <= 18) return "13-18";
+      return "19-24";
+    }
 
-            let clave = "";
-            if (edad >= 7 && edad <= 12) clave = "7-12";
+    function aleatorio(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
 
-            const data = baseDatos[clave];
-            if (!data) {
-                alert("Por ahora solo disponible para 7-12 meses.");
-                return;
-            }
+    function mostrarIdeas() {
+      const edad = parseInt(document.getElementById("edad").value);
+      const nombre = document.getElementById("nombre").value || "el bebé";
+      const rango = rangoEdad(edad);
+      const data = fullData[rango];
 
-            document.getElementById("cuento").innerHTML = data.cuento.replace(/Luca/gi, nombre);
-            document.getElementById("receta").innerHTML = data.receta;
-            document.getElementById("juego").innerHTML = data.juego;
-            document.getElementById("rutina").innerHTML = data.rutina;
+      if (!data) return alert("Edad fuera de rango (0-24 meses)");
 
-            document.getElementById("resultados").style.display = "block";
-        }
+      document.getElementById("cuento").innerHTML = aleatorio(data.cuentos).replace(/\[NOMBRE\]/g, nombre);
+      document.getElementById("receta").innerHTML = aleatorio(data.recetas);
+      document.getElementById("juego").innerHTML = aleatorio(data.juegos);
+      document.getElementById("rutina").innerHTML = aleatorio(data.rutinas);
+      document.getElementById("accordion").style.display = "block";
+    }
 
-        function togglePanel(id) {
-            const panel = document.getElementById(id);
-            panel.style.display = panel.style.display === "block" ? "none" : "block";
-        }
-    </script>
+    function toggle(id) {
+      const panel = document.getElementById(id);
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+  </script>
 </body>
 </html>
