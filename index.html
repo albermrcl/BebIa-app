@@ -3,14 +3,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>BebIA – Cuentos y cuidados personalizados</title>
+    <title>BebIA – Historias y cuidados</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
             background: #f8f9fa;
-            color: #343a40;
+            color: #212529;
             margin: 0;
             padding: 0;
         }
@@ -48,75 +48,83 @@
             font-size: 1em;
             cursor: pointer;
         }
-        .result {
-            background: #f1f3f5;
+        .accordion {
             margin-top: 25px;
-            padding: 20px;
-            border-radius: 10px;
         }
-        .section-title {
-            margin-top: 15px;
+        .accordion button {
+            width: 100%;
+            text-align: left;
+            padding: 12px;
             font-weight: bold;
+            background: #e9ecef;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        .panel {
+            display: none;
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>BebIA</h1>
-        <p class="tagline">Ideas personalizadas para tu bebé</p>
+        <p class="tagline">Tu aliada en la crianza desde el primer día</p>
         <input type="number" id="edad" placeholder="Edad del bebé (en meses)">
         <input type="text" id="nombre" placeholder="Nombre del bebé">
-        <button onclick="mostrarContenido()">Mostrar ideas</button>
-        <div id="salida" class="result" style="display:none;"></div>
+        <button onclick="mostrarIdeas()">Mostrar ideas</button>
+        <div id="resultados" class="accordion" style="display:none;">
+            <button onclick="togglePanel('cuento')">📖 Cuento</button>
+            <div id="cuento" class="panel"></div>
+            <button onclick="togglePanel('receta')">🍵 Receta</button>
+            <div id="receta" class="panel"></div>
+            <button onclick="togglePanel('juego')">🧸 Juego</button>
+            <div id="juego" class="panel"></div>
+            <button onclick="togglePanel('rutina')">🛏 Rutina</button>
+            <div id="rutina" class="panel"></div>
+        </div>
     </div>
 
     <script>
-        const data = {
-            "0-3": {
-                cuento: "Había una vez una nube suave que cuidaba a [NOMBRE] mientras dormía. Cada noche, la nube lo acunaba con canciones de estrellas y lo llevaba a soñar con ositos de algodón.",
-                receta: "Solo leche materna o fórmula. Nada más es necesario en esta etapa.",
-                juego: "Mirarse en el espejo y responder a sonidos suaves o canciones tranquilas.",
-                rutina: "Dormir cada 2-3 horas, cambiar pañal tras cada comida, y un baño relajante por la tarde."
-            },
-            "4-6": {
-                cuento: "En el bosque mágico, [NOMBRE] encontró una flor que hablaba. La flor le enseñaba nuevas palabras cada día y le contaba cuentos sobre el sol y la luna.",
-                receta: "Papilla suave de plátano con un poco de leche. Aplasta bien y sirve templado.",
-                juego: "Agitar sonajeros de colores o buscar juguetes con luz y sonido.",
-                rutina: "Siestas de día, juego en el suelo con supervisión y baños con masajes suaves."
-            },
+        const baseDatos = {
             "7-12": {
-                cuento: "[NOMBRE] era el capitán de un barquito que navegaba por el río de leche. En su viaje, saludaba a patitos y recogía estrellas del agua.",
-                receta: "Puré de calabaza con zanahoria cocida. Puedes añadir un poco de aceite de oliva.",
-                juego: "Torres con bloques, libros de tela, gatear tras una pelota.",
-                rutina: "Comidas fijas, siestas organizadas y rutina nocturna con cuento y canción."
+                cuento: "Luca era el capitán de un barquito que navegaba por el río de leche. En su viaje, saludaba a patitos y recogía estrellas del agua. Un día, encontró una isla secreta donde las estrellas cantaban canciones de cuna. Allí se hizo amigo de una estrella llamada Lili, que le prometió visitarlo cada noche para contarle historias mientras dormía.",
+                receta: "Puré nutritivo: hierve media calabaza pequeña y una zanahoria durante 15 minutos. Tritura con un poco de agua de cocción y añade una cucharadita de aceite de oliva virgen extra. Deja enfriar antes de servir.",
+                juego: "Construye torres de bloques suaves y permite que el bebé las derrumbe. También puedes ofrecer libros de tela con texturas. Un juego excelente es gatear tras una pelota suave, lo que estimula el movimiento y coordinación.",
+                rutina: "7:00 Despertar y desayuno. 9:30 Siesta corta. 12:00 Comida. 13:00 Juego libre. 15:00 Siesta larga. 18:00 Cena ligera. 19:00 Baño con música tranquila. 20:00 Cuento y canción de cuna antes de dormir."
             }
         };
 
-        function mostrarContenido() {
-            const edad = parseInt(document.getElementById('edad').value);
-            const nombre = document.getElementById('nombre').value || "el bebé";
-            const salida = document.getElementById('salida');
+        function mostrarIdeas() {
+            const edad = parseInt(document.getElementById("edad").value);
+            const nombre = document.getElementById("nombre").value || "el bebé";
 
-            let rango = "";
-            if (edad >= 0 && edad <= 3) rango = "0-3";
-            else if (edad <= 6) rango = "4-6";
-            else if (edad <= 12) rango = "7-12";
-            else {
-                salida.innerHTML = "Lo sentimos, esta versión solo cubre hasta 12 meses.";
-                salida.style.display = 'block';
+            let clave = "";
+            if (edad >= 7 && edad <= 12) clave = "7-12";
+
+            const data = baseDatos[clave];
+            if (!data) {
+                alert("Por ahora solo disponible para 7-12 meses.");
                 return;
             }
 
-            const contenido = data[rango];
-            const cuentoPersonalizado = contenido.cuento.replace("[NOMBRE]", nombre);
+            document.getElementById("cuento").innerHTML = data.cuento.replace(/Luca/gi, nombre);
+            document.getElementById("receta").innerHTML = data.receta;
+            document.getElementById("juego").innerHTML = data.juego;
+            document.getElementById("rutina").innerHTML = data.rutina;
 
-            salida.innerHTML = `
-                <div><span class="section-title">📖 Cuento:</span><br>${cuentoPersonalizado}</div>
-                <div><span class="section-title">🍵 Receta:</span><br>${contenido.receta}</div>
-                <div><span class="section-title">🧸 Juego:</span><br>${contenido.juego}</div>
-                <div><span class="section-title">🛏 Rutina:</span><br>${contenido.rutina}</div>
-            `;
-            salida.style.display = 'block';
+            document.getElementById("resultados").style.display = "block";
+        }
+
+        function togglePanel(id) {
+            const panel = document.getElementById(id);
+            panel.style.display = panel.style.display === "block" ? "none" : "block";
         }
     </script>
 </body>
