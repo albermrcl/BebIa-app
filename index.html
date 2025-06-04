@@ -62,7 +62,7 @@
             border-radius: 12px;
             text-align: left;
             font-size: 1em;
-            line-height: 1.6em;
+            line-height: 1.7em;
         }
         .icon {
             margin-bottom: 20px;
@@ -93,25 +93,29 @@
             if (isNaN(edad) || edad < 0) {
                 ideas = "Por favor, introduce una edad válida en meses.";
             } else if (edad <= 3) {
-                ideas = `🧸 <strong>Juegos:</strong> Masajes suaves y contacto piel con piel.<br>
-🍵 <strong>Recetas:</strong> Lactancia exclusiva (leche materna o fórmula).<br>
-🛏️ <strong>Rutina:</strong> Dormir cada 2-3 horas, baños suaves.<br>
-📖 <strong>Cuento:</strong> Cántale tu nombre con rimas suaves.`;
+                ideas = `
+🧸 <strong>Juegos:</strong> Prueba con masajes suaves en piernas y brazos mientras mantienes contacto visual. Cantarle y hablarle con voz dulce estimula su desarrollo auditivo.<br>
+🍵 <strong>Recetas:</strong> Durante esta etapa, el bebé debe alimentarse exclusivamente de leche materna o fórmula. Es vital no introducir otros alimentos aún.<br>
+🛏️ <strong>Rutina:</strong> Alternar siestas cortas y momentos tranquilos con el bebé despierto. Establece una rutina de baño relajante y contacto piel con piel.<br>
+📖 <strong>Cuento:</strong> Utiliza tu voz para contar historias cortas o hacer rimas suaves mientras lo acunas.`;
             } else if (edad <= 6) {
-                ideas = `🧸 <strong>Juegos:</strong> Sonajeros, mirarse al espejo.<br>
-🍵 <strong>Recetas:</strong> Papillas suaves de fruta o cereal.<br>
-🛏️ <strong>Rutina:</strong> Sueño más nocturno, siestas cortas.<br>
-📖 <strong>Cuento:</strong> Cuentos con sonidos simples.`;
+                ideas = `
+🧸 <strong>Juegos:</strong> Usa sonajeros de colores brillantes o deja que se mire en un espejo seguro. Esto mejora la coordinación y la percepción visual.<br>
+🍵 <strong>Recetas:</strong> Introduce papillas suaves de frutas como plátano, pera o manzana. Empieza de a poco y observa reacciones.<br>
+🛏️ <strong>Rutina:</strong> Rutina de sueño nocturno más larga con siestas diurnas. Crea un ambiente tranquilo antes de dormir.<br>
+📖 <strong>Cuento:</strong> Cuentos con sonidos simples y repetitivos como “el patito hacía cuac cuac” captarán su atención.`;
             } else if (edad <= 12) {
-                ideas = `🧸 <strong>Juegos:</strong> Cajas de texturas, torres.<br>
-🍵 <strong>Recetas:</strong> Purés variados y pequeños sólidos.<br>
-🛏️ <strong>Rutina:</strong> Siesta fija + rutina nocturna.<br>
-📖 <strong>Cuento:</strong> Historias con animales y sonidos.`;
+                ideas = `
+🧸 <strong>Juegos:</strong> Dale cajas con diferentes texturas, juguetes que encajan y torres de cubos. Fomenta la exploración y la motricidad.<br>
+🍵 <strong>Recetas:</strong> Purés variados con verduras cocidas, arroz o lentejas. Introduce sabores nuevos de uno en uno.<br>
+🛏️ <strong>Rutina:</strong> Establece horarios fijos de comida y siesta. Incluye rutinas de noche con baño, cuento y canción.<br>
+📖 <strong>Cuento:</strong> Cuentos con animales, sonidos y gestos, incluso permitiéndole pasar páginas con tu ayuda.`;
             } else {
-                ideas = `🧸 <strong>Juegos:</strong> Pintura con dedos, bloques.<br>
-🍵 <strong>Recetas:</strong> Comida familiar adaptada.<br>
-🛏️ <strong>Rutina:</strong> Rutina estable con horarios.<br>
-📖 <strong>Cuento:</strong> Cuentos con personajes e interacción.`;
+                ideas = `
+🧸 <strong>Juegos:</strong> Actividades como pintar con los dedos, juegos de clasificación por color o forma, y juegos de roles simples con muñecos.<br>
+🍵 <strong>Recetas:</strong> Ofrece comida familiar en trozos pequeños, como pasta blanda con verduras, tortilla o frutas. Siempre supervisado.<br>
+🛏️ <strong>Rutina:</strong> Horarios fijos para comida, juego activo y descanso. Fomentar el hábito de dormir solo con elementos de apego.<br>
+📖 <strong>Cuento:</strong> Lee cuentos con historias cortas, preguntas interactivas y personajes que repitan sonidos o acciones.`;
             }
 
             respuesta.innerHTML = ideas;
