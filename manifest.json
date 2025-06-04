@@ -1,11 +1,11 @@
 
 {
-  "name": "MamáZen",
-  "short_name": "MamáZen",
+  "name": "BebIA",
+  "short_name": "BebIA",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#e35b91",
+  "background_color": "#f8f9fa",
+  "theme_color": "#007bff",
   "orientation": "portrait",
   "icons": [
     {

@@ -3,100 +3,120 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>BebIa - Tu apoyo diario para tu bebé</title>
+    <title>BebIA – Tu aliada en la crianza</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #fff;
-            color: #333;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            color: #343a40;
             margin: 0;
-            padding: 20px;
+            padding: 0;
         }
         .container {
-            max-width: 420px;
-            margin: auto;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            padding: 20px;
-            background: #fdfdfd;
-        }
-        .logo {
+            max-width: 480px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            padding: 30px;
             text-align: center;
-            margin-bottom: 20px;
-        }
-        .logo img {
-            width: 100px;
-            border-radius: 50%;
         }
         h1 {
-            text-align: center;
-            color: #333;
+            color: #495057;
+            font-size: 2em;
+            margin-bottom: 10px;
         }
-        .tagline {
-            text-align: center;
-            font-size: 1rem;
-            color: #777;
-            margin-bottom: 20px;
+        p.tagline {
+            color: #6c757d;
+            margin-bottom: 25px;
+            font-size: 1em;
         }
-        input[type="text"] {
+        input[type="number"] {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 1rem;
+            padding: 14px;
+            font-size: 1em;
+            border: 1.5px solid #ced4da;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
         button {
             width: 100%;
-            padding: 12px;
-            background-color: #e35b91;
-            color: #fff;
-            font-size: 1rem;
+            padding: 14px;
+            font-size: 1em;
+            background-color: #007bff;
+            color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
+            transition: background 0.3s;
         }
-        .features {
-            margin-top: 20px;
+        button:hover {
+            background-color: #0056b3;
         }
-        .feature {
-            margin-bottom: 15px;
+        .result {
+            background-color: #f1f3f5;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 1em;
+            line-height: 1.6em;
         }
-        .feature strong {
-            display: block;
-            color: #4b0082;
-            margin-bottom: 5px;
+        .icon {
+            margin-bottom: 20px;
+        }
+        .icon img {
+            width: 72px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">
-            <img src="https://cdn-icons-png.flaticon.com/512/3871/3871836.png" alt="MamáZen logo">
+        <div class="icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/3871/3871836.png" alt="BebIA logo">
         </div>
-        <h1>MamáZen</h1>
-        <div class="tagline">Tu aliada en la crianza desde el primer día</div>
-        <input type="text" placeholder="Edad del bebé">
-        <button>Obtener ideas</button>
-        <div class="features">
-            <div class="feature">
-                <strong>🧸 Ideas de juegos</strong>
-                Actividades caseras según la edad de tu bebé.
-            </div>
-            <div class="feature">
-                <strong>🥣 Recetas</strong>
-                Platos fáciles y sanos para mamá y bebé.
-            </div>
-            <div class="feature">
-                <strong>⏰ Rutinas</strong>
-                Horarios personalizados de sueño y comidas.
-            </div>
-            <div class="feature">
-                <strong>📖 Cuentos</strong>
-                Historias adaptadas con el nombre de tu bebé.
-            </div>
-        </div>
+        <h1>BebIA</h1>
+        <p class="tagline">Tu aliada en la crianza desde el primer día</p>
+        <input type="number" id="edad" placeholder="Edad del bebé (en meses)">
+        <button onclick="generarIdeas()">Obtener ideas</button>
+        <div id="respuesta" class="result" style="display:none;"></div>
     </div>
+
+    <script>
+        function generarIdeas() {
+            const edad = parseInt(document.getElementById('edad').value);
+            const respuesta = document.getElementById('respuesta');
+            let ideas = "";
+
+            if (isNaN(edad) || edad < 0) {
+                ideas = "Por favor, introduce una edad válida en meses.";
+            } else if (edad <= 3) {
+                ideas = `🧸 <strong>Juegos:</strong> Masajes suaves y contacto piel con piel.<br>
+🍵 <strong>Recetas:</strong> Lactancia exclusiva (leche materna o fórmula).<br>
+🛏️ <strong>Rutina:</strong> Dormir cada 2-3 horas, baños suaves.<br>
+📖 <strong>Cuento:</strong> Cántale tu nombre con rimas suaves.`;
+            } else if (edad <= 6) {
+                ideas = `🧸 <strong>Juegos:</strong> Sonajeros, mirarse al espejo.<br>
+🍵 <strong>Recetas:</strong> Papillas suaves de fruta o cereal.<br>
+🛏️ <strong>Rutina:</strong> Sueño más nocturno, siestas cortas.<br>
+📖 <strong>Cuento:</strong> Cuentos con sonidos simples.`;
+            } else if (edad <= 12) {
+                ideas = `🧸 <strong>Juegos:</strong> Cajas de texturas, torres.<br>
+🍵 <strong>Recetas:</strong> Purés variados y pequeños sólidos.<br>
+🛏️ <strong>Rutina:</strong> Siesta fija + rutina nocturna.<br>
+📖 <strong>Cuento:</strong> Historias con animales y sonidos.`;
+            } else {
+                ideas = `🧸 <strong>Juegos:</strong> Pintura con dedos, bloques.<br>
+🍵 <strong>Recetas:</strong> Comida familiar adaptada.<br>
+🛏️ <strong>Rutina:</strong> Rutina estable con horarios.<br>
+📖 <strong>Cuento:</strong> Cuentos con personajes e interacción.`;
+            }
+
+            respuesta.innerHTML = ideas;
+            respuesta.style.display = 'block';
+        }
+    </script>
 </body>
 </html>

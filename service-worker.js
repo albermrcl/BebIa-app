@@ -1,9 +1,10 @@
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open('mamazen-cache').then(function(cache) {
+    caches.open('bebia-cache').then(function(cache) {
       return cache.addAll([
-        'index.html'
+        'index.html',
+        'manifest.json'
       ]);
     })
   );
