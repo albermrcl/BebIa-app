@@ -3,123 +3,120 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>BebIA – Tu aliada en la crianza</title>
+    <title>BebIA – Cuentos y cuidados personalizados</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            background: #f8f9fa;
             color: #343a40;
             margin: 0;
             padding: 0;
         }
         .container {
-            max-width: 480px;
+            max-width: 500px;
             margin: 40px auto;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            background: white;
             padding: 30px;
-            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
         }
         h1 {
-            color: #495057;
-            font-size: 2em;
-            margin-bottom: 10px;
+            text-align: center;
+            color: #007bff;
         }
         p.tagline {
+            text-align: center;
             color: #6c757d;
-            margin-bottom: 25px;
-            font-size: 1em;
         }
-        input[type="number"] {
+        input {
             width: 100%;
-            padding: 14px;
-            font-size: 1em;
-            border: 1.5px solid #ced4da;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
             border-radius: 8px;
-            margin-bottom: 20px;
+            font-size: 1em;
         }
         button {
             width: 100%;
-            padding: 14px;
-            font-size: 1em;
-            background-color: #007bff;
+            padding: 12px;
+            background: #007bff;
             color: white;
             border: none;
             border-radius: 8px;
+            font-size: 1em;
             cursor: pointer;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
         }
         .result {
-            background-color: #f1f3f5;
-            margin-top: 30px;
+            background: #f1f3f5;
+            margin-top: 25px;
             padding: 20px;
-            border-radius: 12px;
-            text-align: left;
-            font-size: 1em;
-            line-height: 1.7em;
+            border-radius: 10px;
         }
-        .icon {
-            margin-bottom: 20px;
-        }
-        .icon img {
-            width: 72px;
+        .section-title {
+            margin-top: 15px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="icon">
-            <img src="https://cdn-icons-png.flaticon.com/512/3871/3871836.png" alt="BebIA logo">
-        </div>
         <h1>BebIA</h1>
-        <p class="tagline">Tu aliada en la crianza desde el primer día</p>
+        <p class="tagline">Ideas personalizadas para tu bebé</p>
         <input type="number" id="edad" placeholder="Edad del bebé (en meses)">
-        <button onclick="generarIdeas()">Obtener ideas</button>
-        <div id="respuesta" class="result" style="display:none;"></div>
+        <input type="text" id="nombre" placeholder="Nombre del bebé">
+        <button onclick="mostrarContenido()">Mostrar ideas</button>
+        <div id="salida" class="result" style="display:none;"></div>
     </div>
 
     <script>
-        function generarIdeas() {
-            const edad = parseInt(document.getElementById('edad').value);
-            const respuesta = document.getElementById('respuesta');
-            let ideas = "";
+        const data = {
+            "0-3": {
+                cuento: "Había una vez una nube suave que cuidaba a [NOMBRE] mientras dormía. Cada noche, la nube lo acunaba con canciones de estrellas y lo llevaba a soñar con ositos de algodón.",
+                receta: "Solo leche materna o fórmula. Nada más es necesario en esta etapa.",
+                juego: "Mirarse en el espejo y responder a sonidos suaves o canciones tranquilas.",
+                rutina: "Dormir cada 2-3 horas, cambiar pañal tras cada comida, y un baño relajante por la tarde."
+            },
+            "4-6": {
+                cuento: "En el bosque mágico, [NOMBRE] encontró una flor que hablaba. La flor le enseñaba nuevas palabras cada día y le contaba cuentos sobre el sol y la luna.",
+                receta: "Papilla suave de plátano con un poco de leche. Aplasta bien y sirve templado.",
+                juego: "Agitar sonajeros de colores o buscar juguetes con luz y sonido.",
+                rutina: "Siestas de día, juego en el suelo con supervisión y baños con masajes suaves."
+            },
+            "7-12": {
+                cuento: "[NOMBRE] era el capitán de un barquito que navegaba por el río de leche. En su viaje, saludaba a patitos y recogía estrellas del agua.",
+                receta: "Puré de calabaza con zanahoria cocida. Puedes añadir un poco de aceite de oliva.",
+                juego: "Torres con bloques, libros de tela, gatear tras una pelota.",
+                rutina: "Comidas fijas, siestas organizadas y rutina nocturna con cuento y canción."
+            }
+        };
 
-            if (isNaN(edad) || edad < 0) {
-                ideas = "Por favor, introduce una edad válida en meses.";
-            } else if (edad <= 3) {
-                ideas = `
-🧸 <strong>Juegos:</strong> Prueba con masajes suaves en piernas y brazos mientras mantienes contacto visual. Cantarle y hablarle con voz dulce estimula su desarrollo auditivo.<br>
-🍵 <strong>Recetas:</strong> Durante esta etapa, el bebé debe alimentarse exclusivamente de leche materna o fórmula. Es vital no introducir otros alimentos aún.<br>
-🛏️ <strong>Rutina:</strong> Alternar siestas cortas y momentos tranquilos con el bebé despierto. Establece una rutina de baño relajante y contacto piel con piel.<br>
-📖 <strong>Cuento:</strong> Utiliza tu voz para contar historias cortas o hacer rimas suaves mientras lo acunas.`;
-            } else if (edad <= 6) {
-                ideas = `
-🧸 <strong>Juegos:</strong> Usa sonajeros de colores brillantes o deja que se mire en un espejo seguro. Esto mejora la coordinación y la percepción visual.<br>
-🍵 <strong>Recetas:</strong> Introduce papillas suaves de frutas como plátano, pera o manzana. Empieza de a poco y observa reacciones.<br>
-🛏️ <strong>Rutina:</strong> Rutina de sueño nocturno más larga con siestas diurnas. Crea un ambiente tranquilo antes de dormir.<br>
-📖 <strong>Cuento:</strong> Cuentos con sonidos simples y repetitivos como “el patito hacía cuac cuac” captarán su atención.`;
-            } else if (edad <= 12) {
-                ideas = `
-🧸 <strong>Juegos:</strong> Dale cajas con diferentes texturas, juguetes que encajan y torres de cubos. Fomenta la exploración y la motricidad.<br>
-🍵 <strong>Recetas:</strong> Purés variados con verduras cocidas, arroz o lentejas. Introduce sabores nuevos de uno en uno.<br>
-🛏️ <strong>Rutina:</strong> Establece horarios fijos de comida y siesta. Incluye rutinas de noche con baño, cuento y canción.<br>
-📖 <strong>Cuento:</strong> Cuentos con animales, sonidos y gestos, incluso permitiéndole pasar páginas con tu ayuda.`;
-            } else {
-                ideas = `
-🧸 <strong>Juegos:</strong> Actividades como pintar con los dedos, juegos de clasificación por color o forma, y juegos de roles simples con muñecos.<br>
-🍵 <strong>Recetas:</strong> Ofrece comida familiar en trozos pequeños, como pasta blanda con verduras, tortilla o frutas. Siempre supervisado.<br>
-🛏️ <strong>Rutina:</strong> Horarios fijos para comida, juego activo y descanso. Fomentar el hábito de dormir solo con elementos de apego.<br>
-📖 <strong>Cuento:</strong> Lee cuentos con historias cortas, preguntas interactivas y personajes que repitan sonidos o acciones.`;
+        function mostrarContenido() {
+            const edad = parseInt(document.getElementById('edad').value);
+            const nombre = document.getElementById('nombre').value || "el bebé";
+            const salida = document.getElementById('salida');
+
+            let rango = "";
+            if (edad >= 0 && edad <= 3) rango = "0-3";
+            else if (edad <= 6) rango = "4-6";
+            else if (edad <= 12) rango = "7-12";
+            else {
+                salida.innerHTML = "Lo sentimos, esta versión solo cubre hasta 12 meses.";
+                salida.style.display = 'block';
+                return;
             }
 
-            respuesta.innerHTML = ideas;
-            respuesta.style.display = 'block';
+            const contenido = data[rango];
+            const cuentoPersonalizado = contenido.cuento.replace("[NOMBRE]", nombre);
+
+            salida.innerHTML = `
+                <div><span class="section-title">📖 Cuento:</span><br>${cuentoPersonalizado}</div>
+                <div><span class="section-title">🍵 Receta:</span><br>${contenido.receta}</div>
+                <div><span class="section-title">🧸 Juego:</span><br>${contenido.juego}</div>
+                <div><span class="section-title">🛏 Rutina:</span><br>${contenido.rutina}</div>
+            `;
+            salida.style.display = 'block';
         }
     </script>
 </body>
